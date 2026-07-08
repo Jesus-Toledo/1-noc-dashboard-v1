@@ -66,15 +66,56 @@ let servers = [
 ];
 
 
-//ticket 421
+//ticket #421
 
-let button = document.getElementById("showOffline");
+const showOfflineButton = document.getElementById("showOffline");
 
-button.addEventListener("click", () => {
+showOfflineButton.addEventListener("click", () => {
     let html = servers 
         .filter(server => server.status === "Offline")
         .map(server => `<div>${server.id} - ${server.name} - ${server.status} - ${server.cpu} - ${server.vendor} - ${server.city}</div>`)
         .join("");
 
        document.getElementById("servers").innerHTML = html; 
+});
+
+
+//ticket #422
+
+const cpu50Button = document.getElementById("showLowCpu");
+
+cpu50Button.addEventListener("click", () => {
+    let html = servers
+        .filter(server => server.cpu < 50)
+        .map(server => `<div>${server.id} - ${server.name} - ${server.status} - ${server.cpu} - ${server.vendor} - ${server.city}</div>`)
+        .join("");
+        
+    document.getElementById("servers").innerHTML = html;
+});
+
+
+//ticket #423
+
+const cpu70Button = document.getElementById("showOfflineCritical");
+
+cpu70Button.addEventListener("click", ()=> {
+    let html = servers 
+        .filter(server => server.status === "Offline" && server.cpu > 70)
+        .map(server => `<div>${server.id} - ${server.name} - ${server.status} - ${server.cpu} -${server.vendor} - ${server.city}</div>`)
+        .join("");
+
+    document.getElementById("servers").innerHTML = html
+});
+
+//ticket #424
+
+const showAllButton = document.getElementById("showAll");
+
+showAllButton.addEventListener("click", () => {
+    let html = servers 
+        .map(
+        server => `<div> ${server.status === "Online" ? "🟢" : "🔴"}${server.id} - ${server.name} - ${server.status} - ${server.cpu} -${server.vendor} - ${server.city}</div>`
+        )
+        .join("");
+    document.getElementById("servers").innerHTML = html;
 });
